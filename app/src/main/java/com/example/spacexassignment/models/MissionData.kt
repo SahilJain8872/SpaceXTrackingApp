@@ -29,5 +29,5 @@ data class MissionData(
     @SerializedName("static_fire_date_utc") var staticFireDateUtc: String?,
     @SerializedName("static_fire_date_unix") var staticFireDateUnix: Int?,
     @SerializedName("timeline") var timeline: Timeline?,
-    @SerializedName("crew") var crew: String?
+    @SerializedName("crew") var crew: ArrayList<String>?
 ): Parcelable

@@ -20,5 +20,6 @@
     <string name="rocket_details">Rocket Details: %1$s</string>
     <string name="launch_date">Launch Date: %1$s</string>
     <string name="launch_details">Launch Details: %1$s</string>
-    <string name="links_amp_media">Links &amp; Media: %1$s></string>
+    <string name="links_amp_media">Links &amp; Media: <a href="%1$s">%2$s</a></string>
+
 </resources>

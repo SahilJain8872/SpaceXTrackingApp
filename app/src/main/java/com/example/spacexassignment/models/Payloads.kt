@@ -13,8 +13,8 @@ data class Payloads (
     @SerializedName("nationality") var nationality: String?,
     @SerializedName("manufacturer") var manufacturer: String?,
     @SerializedName("payload_type") var payloadType: String?,
-    @SerializedName("payload_mass_kg") var payloadMassKg: Int?,
-    @SerializedName("payload_mass_lbs") var payloadMassLbs: Int?,
+    @SerializedName("payload_mass_kg") var payloadMassKg: String?,
+    @SerializedName("payload_mass_lbs") var payloadMassLbs: String?,
     @SerializedName("orbit") var orbit: String?,
     @SerializedName("orbit_params") var orbitParams: OrbitParams?
 ): Parcelable
