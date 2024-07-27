@@ -22,7 +22,7 @@ class MissionAdapter(private val missionsList: List<MissionData>,
             val context = itemView.context
             binding.missionName.text = context.getString(R.string.mission_name, mission.missionName)
             binding.launchYear.text = context.getString(R.string.launch_year, mission.launchYear.toString())
-            binding.rocketName.text = context.getString(R.string.rocket_name, mission.rocketName)
+            binding.rocketName.text = context.getString(R.string.rocket_name, mission.rocket?.rocketName ?: "")
         }
     }
 
