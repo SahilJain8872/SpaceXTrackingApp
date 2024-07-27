@@ -7,9 +7,17 @@ import com.example.spacexassignment.R
 import com.example.spacexassignment.databinding.ItemLaunchMissionBinding
 import com.example.spacexassignment.models.MissionData
 
-class MissionAdapter(private val missionsList: List<MissionData>) : RecyclerView.Adapter<MissionAdapter.MissionViewHolder>() {
-
+class MissionAdapter(private val missionsList: List<MissionData>,
+                     private val onItemClick: (MissionData) -> Unit) : RecyclerView.Adapter<MissionAdapter.MissionViewHolder>() {
     inner class MissionViewHolder(private val binding: ItemLaunchMissionBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(missionsList[position])
+                }
+            }
+        }
         fun bind(mission: MissionData) {
             val context = itemView.context
             binding.missionName.text = context.getString(R.string.mission_name, mission.missionName)

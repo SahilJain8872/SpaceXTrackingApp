@@ -30,8 +30,25 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
 
-        missionAdapter = MissionAdapter(arrayListOf())
+        // Sample data
+        val missions = listOf(
+            MissionData("Apollo 11", 1969, "Saturn V"),
+            MissionData("Mars Rover", 2020, "Atlas V"),
+            MissionData("Apollo 11", 1969, "Saturn V"),
+            MissionData("Mars Rover", 2020, "Atlas V"),
+            MissionData("Apollo 11", 1969, "Saturn V"),
+            MissionData("Mars Rover", 2020, "Atlas V"),
+            MissionData("Apollo 11", 1969, "Saturn V"),
+            MissionData("Mars Rover", 2020, "Atlas V"),
+            MissionData("Apollo 11", 1969, "Saturn V"),
+            MissionData("Mars Rover", 2020, "Atlas V"),
+            MissionData("Apollo 11", 1969, "Saturn V"),
+            MissionData("Mars Rover", 2020, "Atlas V")
+        )
 
+        missionAdapter = MissionAdapter(missions){ mission->
+//            startActivity()
+        }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = missionAdapter
     }

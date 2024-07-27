@@ -1,14 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/missionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mission_name"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
@@ -16,11 +17,20 @@
         android:id="@+id/launchYear"
         android:text="@string/launch_year"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/rocketName"
         android:text="@string/rocket_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"/>
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/color_divider"
+        android:layout_marginTop="16dp" />
 </LinearLayout>
