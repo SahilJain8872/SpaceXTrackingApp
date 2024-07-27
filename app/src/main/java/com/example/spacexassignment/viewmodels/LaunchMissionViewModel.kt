@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.http.Query
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +23,7 @@ class LaunchMissionViewModel @Inject constructor(
     private val _missionData = MutableStateFlow<List<MissionData>>(emptyList())
     val missionData: StateFlow<List<MissionData>> get() = _missionData
 
-    init {
-        fetchSpaceLaunches()
-    }
-
-    private fun fetchSpaceLaunches() {
+    fun fetchSpaceLaunches() {
         viewModelScope.launch {
             repository.getLaunchMissionData()
                 .flowOn(Dispatchers.IO)
@@ -37,5 +34,18 @@ class LaunchMissionViewModel @Inject constructor(
                     _missionData.value = launches
                 }
         }
+    }
+
+    fun getMissionListByQuery(query: String): List<MissionData> {
+        val result = arrayListOf<MissionData>()
+        _missionData.value.forEach { mission ->
+            val missionName = mission.missionName?.lowercase()?.contains(query) ?: false
+            val launchYear = mission.launchYear?.contains(query) ?: false
+            val rocketName = mission.rocket?.rocketName?.lowercase()?.contains(query) ?: false
+
+            if (missionName || launchYear || rocketName)
+                result.add(mission)
+        }
+        return result
     }
 }

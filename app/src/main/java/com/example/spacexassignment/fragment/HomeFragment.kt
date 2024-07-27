@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
-
+        viewModel.fetchSpaceLaunches()
         missionAdapter = MissionAdapter{ mission->
             startActivity(LaunchDetailActivity.newInstance(requireContext(), mission))
         }
