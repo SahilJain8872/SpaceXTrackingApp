@@ -15,14 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var currentTabPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        currentTabPosition = R.id.navigation_home
         setupUI()
-
     }
 
     private fun setupUI(){
@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(HomeFragment())
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
+            if(currentTabPosition == menuItem.itemId)  return@setOnNavigationItemSelectedListener true
+            currentTabPosition = menuItem.itemId
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
                     HomeFragment()
