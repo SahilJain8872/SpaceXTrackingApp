@@ -45,6 +45,8 @@ class HomeFragment : Fragment() {
             viewModel.missionData.collect { launches ->
                 if(launches.isNotEmpty()) {
                     missionAdapter.submitList(launches)
+                    binding.viewProgress.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
                 }
             }
         }
