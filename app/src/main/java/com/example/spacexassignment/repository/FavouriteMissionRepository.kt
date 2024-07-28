@@ -3,16 +3,15 @@ package com.example.spacexassignment.repository
 import com.example.spacexassignment.room.FavouriteMissionDao
 import com.example.spacexassignment.room.FavouriteMissionEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class FavouriteMissionRepository(private val dao: FavouriteMissionDao) {
 
-    suspend fun getAllFavoriteMissions(): Flow<List<FavouriteMissionEntity>> {
+    fun getAllFavoriteMissions(): Flow<List<FavouriteMissionEntity>> {
         return dao.getAllFavoritesMission()
     }
 
-    suspend fun isFavoriteMission(flightNumber: Int): Flow<Boolean> {
-        return dao.isFavoriteMission(flightNumber).map { count -> count > 0 }
+    fun isFavoriteMission(flightNumber: Int): Flow<Int> {
+        return dao.isFavoriteMission(flightNumber)
     }
 
     suspend fun insertFavoriteMission(favorite: FavouriteMissionEntity) {

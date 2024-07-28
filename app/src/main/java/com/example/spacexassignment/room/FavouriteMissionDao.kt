@@ -15,8 +15,8 @@ interface FavouriteMissionDao {
     suspend fun deleteFavoriteMission(flightNumber: Int)
 
     @Query("SELECT * FROM favorite_missions ORDER BY flightNumber ASC")
-    suspend fun getAllFavoritesMission(): Flow<List<FavouriteMissionEntity>>
+    fun getAllFavoritesMission(): Flow<List<FavouriteMissionEntity>>
 
     @Query("SELECT COUNT(*) FROM favorite_missions WHERE flightNumber = :flightNumber")
-    suspend fun isFavoriteMission(flightNumber: Int): Flow<Int>
+    fun isFavoriteMission(flightNumber: Int): Flow<Int>
 }

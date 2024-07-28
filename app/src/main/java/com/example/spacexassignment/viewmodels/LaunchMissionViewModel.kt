@@ -28,8 +28,8 @@ class LaunchMissionViewModel @Inject constructor(
 ) : ViewModel() {
     private val _missionData = MutableStateFlow<List<MissionData>>(emptyList())
     val missionData: StateFlow<List<MissionData>> get() = _missionData
-    private val _favoriteMissions = MutableStateFlow<List<FavouriteMissionEntity>>(emptyList())
-    val favoriteMissions: StateFlow<List<FavouriteMissionEntity>> = _favoriteMissions
+    private val _favoriteMissions = MutableStateFlow<List<FavouriteMissionEntity>?>(emptyList())
+
     var webViewStateRetain = Bundle()
     private var currentTabPosition = MutableLiveData<Int>()
     var url = "https://www.spacex.com/vehicles/falcon-9/"
