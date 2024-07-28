@@ -30,7 +30,13 @@ class StoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         webView = binding.webView
         webView.settings.javaScriptEnabled = true
-        webView.webViewClient = WebViewClient()
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                binding.viewProgress.visibility = View.GONE
+                binding.webView.visibility = View.VISIBLE
+                super.onPageFinished(view, url)
+            }
+        }
 
         if(viewModel.webViewStateRetain.isEmpty.not()){
             webView.restoreState(viewModel.webViewStateRetain)
