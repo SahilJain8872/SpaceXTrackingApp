@@ -1,6 +1,9 @@
 package com.example.spacexassignment.viewmodels
 
+import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexassignment.models.MissionData
@@ -22,6 +25,9 @@ class LaunchMissionViewModel @Inject constructor(
 ) : ViewModel() {
     private val _missionData = MutableStateFlow<List<MissionData>>(emptyList())
     val missionData: StateFlow<List<MissionData>> get() = _missionData
+    var webViewStateRetain = Bundle()
+    private var currentTabPosition = MutableLiveData<Int>()
+    var url = "https://www.spacex.com/vehicles/falcon-9/"
 
     fun fetchSpaceLaunches() {
         viewModelScope.launch {
@@ -48,4 +54,14 @@ class LaunchMissionViewModel @Inject constructor(
         }
         return result
     }
+    fun setWebViewState(bundle: Bundle) {
+        webViewStateRetain = bundle
+    }
+
+    fun setCurrentTabPosition(tabPosition: Int){
+        currentTabPosition.value = tabPosition
+    }
+
+    fun getCurrentTabPosition() = currentTabPosition
+
 }

@@ -43,8 +43,9 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.missionData.collect { launches ->
-                if(launches.isNotEmpty())
+                if(launches.isNotEmpty()) {
                     missionAdapter.submitList(launches)
+                }
             }
         }
     }
