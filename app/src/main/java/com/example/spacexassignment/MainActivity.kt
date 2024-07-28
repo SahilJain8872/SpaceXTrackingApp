@@ -5,6 +5,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.viewpager2.widget.ViewPager2
+import com.example.spacexassignment.adapter.MainViewPagerAdapter
 import com.example.spacexassignment.databinding.ActivityMainBinding
 import com.example.spacexassignment.fragment.HomeFragment
 import com.example.spacexassignment.fragment.SearchFragment
@@ -16,46 +18,39 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: LaunchMissionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (savedInstanceState == null) {
-            viewModel.setCurrentTabPosition(R.id.navigation_home)
-        }
-        setupUI()
-    }
 
-    private fun setupUI(){
         setSupportActionBar(binding.toolbar)
         binding.toolbar.title = "SpaceXTracking"
-         viewModel.getCurrentTabPosition().observe(this){ menuItemId->
-             when (menuItemId) {
-                 R.id.navigation_home -> {
-                     replaceFragment(HomeFragment(), "HomeFragmentTag")
-                 }
-                 R.id.navigation_store -> {
-                     replaceFragment(StoreFragment(), "StoreFragmentTag")
-                 }
-                 R.id.navigation_search -> {
-                     replaceFragment(SearchFragment(), "SearchFragmentTag")
-                 }
-             }
-         }
 
-        binding.bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
-            viewModel.setCurrentTabPosition(menuItem.itemId)
+        val adapter = MainViewPagerAdapter(this)
+        binding.viewPager.adapter = adapter
+
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            binding.viewPager.currentItem = when (menuItem.itemId) {
+                R.id.navigation_home -> 0
+                R.id.navigation_store -> 1
+                R.id.navigation_search -> 2
+                else -> 0
+            }
             true
         }
-    }
 
-    private fun replaceFragment(fragment: Fragment, tag: String){
-        val addedFragment = supportFragmentManager.findFragmentByTag(tag)
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(binding.navHostFragment.id, addedFragment ?: fragment, tag)
-        }
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val menuItemId = when (position) {
+                    0 -> R.id.navigation_home
+                    1 -> R.id.navigation_store
+                    2 -> R.id.navigation_search
+                    else -> R.id.navigation_home
+                }
+                binding.bottomNavigation.selectedItemId = menuItemId
+            }
+        })
     }
 }
