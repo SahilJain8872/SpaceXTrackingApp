@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexassignment.models.MissionData
+import com.example.spacexassignment.repository.FavouriteMissionRepository
 import com.example.spacexassignment.repository.LaunchMissionRepository
+import com.example.spacexassignment.room.FavouriteMissionEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,17 +23,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LaunchMissionViewModel @Inject constructor(
-    private val repository: LaunchMissionRepository
+    private val launchRepository: LaunchMissionRepository,
+    private val favMissionRepository: FavouriteMissionRepository
 ) : ViewModel() {
     private val _missionData = MutableStateFlow<List<MissionData>>(emptyList())
     val missionData: StateFlow<List<MissionData>> get() = _missionData
+    private val _favoriteMissions = MutableStateFlow<List<FavouriteMissionEntity>>(emptyList())
+    val favoriteMissions: StateFlow<List<FavouriteMissionEntity>> = _favoriteMissions
     var webViewStateRetain = Bundle()
     private var currentTabPosition = MutableLiveData<Int>()
     var url = "https://www.spacex.com/vehicles/falcon-9/"
 
+    init {
+        viewModelScope.launch {
+            favMissionRepository.getAllFavoriteMissions().collect { missions ->
+                _favoriteMissions.value = missions
+            }
+        }
+    }
     fun fetchSpaceLaunches() {
         viewModelScope.launch {
-            repository.getLaunchMissionData()
+            launchRepository.getLaunchMissionData()
                 .flowOn(Dispatchers.IO)
                 .catch { error ->
                     Log.e("LaunchMissionViewModel",error.message.toString())
